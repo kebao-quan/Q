@@ -1,8 +1,2 @@
 #pragma once
 
-
-
-int add()
-{
-
-}

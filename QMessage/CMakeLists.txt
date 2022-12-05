@@ -12,7 +12,7 @@ add_definitions(-DOQS_CPP_VERSION="${OQS_CPP_VERSION_STR}")
 
 
 # Add source to this project's executable.
-add_executable (QMessage "QMessage.cpp" "QMessage.h" )
+add_executable (QMessage "QMessage.cpp" "QMessage.h"  "imgui/ma.cpp")
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET QMessage PROPERTY CXX_STANDARD 20)
