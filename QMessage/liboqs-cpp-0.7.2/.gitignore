@@ -15,6 +15,7 @@
 *.so
 *.dylib
 *.dll
+!liboqsDLL/bin/oqs.dll
 
 # Fortran module files
 *.mod
@@ -25,6 +26,7 @@
 *.la
 *.a
 *.lib
+!liboqsDLL/lib/oqs.lib
 
 # Executables
 *.exe
