@@ -7,35 +7,53 @@ cmake_policy(SET CMP0079 NEW)
 set(OQS_CPP_VERSION_NUM 0.7.2)
 set(OQS_CPP_VERSION_STR "${OQS_CPP_VERSION_NUM}")
 
+
 # liboqs-cpp version number
 add_definitions(-DOQS_CPP_VERSION="${OQS_CPP_VERSION_STR}")
 
+add_subdirectory ("liboqs-cpp-0.7.2")
+add_subdirectory ("src")
 
 # Add source to this project's executable.
-add_executable (QMessage "QMessage.cpp" "QMessage.h"  "imgui/ma.cpp")
+add_executable (QMessage 
+	"src/QMessage.cpp"
+	"include/QMessage.h"
+	"src/util.cpp"
+	"src/ServerSocket.cpp"
+	"src/message.cpp"
+	"src/encrypt.cpp"
+)
+
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)
   set_property(TARGET QMessage PROPERTY CXX_STANDARD 20)
 endif()
 
 # TODO: Add tests and install targets if needed.
-add_subdirectory ("liboqs-cpp")
 
-
-target_include_directories(${PROJECT_NAME} 
-	PUBLIC liboqs-cpp/include
-)
 
 
 target_include_directories(${PROJECT_NAME} 
-	PUBLIC liboqs-cpp/liboqsDLL/include
+	PUBLIC liboqs-cpp-0.7.2/include
+	PUBLIC liboqs-cpp-0.7.2/liboqsDLL/include
+	PUBLIC cryptopp/include/cryptopp
+	PUBLIC include
 )
+
 
 target_link_directories(${PROJECT_NAME}
-	PUBLIC liboqs-cpp/liboqsDLL/lib
+	PUBLIC liboqs-cpp-0.7.2/liboqsDLL/lib
+	PUBLIC cryptopp/lib
 )
 
 target_link_libraries(${PROJECT_NAME}
-	PRIVATE oqs
+	PRIVATE oqs 
+	PRIVATE cryptopp
 )
+
+if(WIN32)
+  target_link_libraries(${PROJECT_NAME} 
+	PUBLIC wsock32
+	PUBLIC ws2_32)
+endif()
 
