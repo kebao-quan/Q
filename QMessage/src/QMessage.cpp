@@ -31,7 +31,7 @@ int main()
         cout << "Enter peer port" << endl;
         cin >> port;
 
-        cout << "Connecting to " << hostname << " on port " << port << "......." << endl;
+        cout << "Connecting to " << hostname << " on port " << port << "......." << endl << endl;
 
         thread_start_client(hostname, port);
     }

@@ -202,8 +202,8 @@ unsigned WINAPI thread_start_server(void* arg)
 		sendto(sockSrv, sendBuf, ciphertext.length(), 0, (SOCKADDR*)&addrCli, len);
 
 
-		std::cout << oqs::hex_chop(mServer->getSecret()) << std::endl;
 		std::cout << "server secret key established" << std::endl;
+		std::cout << oqs::hex_chop(mServer->getSecret()) << std::endl;
 
 
 		using namespace CryptoPP;

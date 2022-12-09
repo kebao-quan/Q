@@ -59,10 +59,9 @@ unsigned WINAPI thread_start_client(std::string hostname, int port)
 	//std::cout << "length: " << pKey.length() << std::endl;
 	oqs::bytes ciphertext = stringToOqsBytes(ciphertext_);
 	oqs::bytes shared_secret_client = client.decap_secret(ciphertext);
-	cout << "Share key: " << endl;
-	cout << oqs::hex_chop(shared_secret_client) << endl;
+	std::cout << "client secret key established" << std::endl;
+	cout << "Shared key: " << oqs::hex_chop(shared_secret_client) << endl;
 
-	std::cout << "server secret key established" << std::endl;
 
 
 	using namespace CryptoPP;
