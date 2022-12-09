@@ -16,15 +16,6 @@
 
 
 
-
-
-
-
-
-
-
-
-
 unsigned WINAPI thread_start_client(std::string hostname, int port)
 {
 	using namespace std;
@@ -56,8 +47,6 @@ unsigned WINAPI thread_start_client(std::string hostname, int port)
 	const char* sendBuf = pKey.data();
 
 
-	cout << client_public_key.size() << endl;
-	cout << "length: " << pKey.length() << endl;
 	//Dump(client_public_key, client_public_key.size());
 
 	sendto(sockCli, sendBuf, pKey.length(), 0, (SOCKADDR*)&addrSrv, len);
@@ -95,7 +84,7 @@ unsigned WINAPI thread_start_client(std::string hostname, int port)
 
 
 
-	std::cout << "start chatting" << std::endl;
+	std::cout << "start chat" << std::endl;
 	CChat m_chat(key, iv, sockCli, addrSrv);
 	m_chat.startSending();
 

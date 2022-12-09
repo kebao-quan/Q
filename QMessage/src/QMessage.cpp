@@ -14,6 +14,7 @@ int main()
     using std::cin;
     initSockEnv();
 
+    cout << "Are you a server or a client?" << endl;
     std::string mode;
     cin >> mode;
     if (mode == "server")

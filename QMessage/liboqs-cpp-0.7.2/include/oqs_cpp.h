@@ -715,9 +715,9 @@ class Init final : public internal::Singleton<const Init> {
         std::string oqs_ver = oqs_version();
         std::string oqs_cpp_ver = oqs_cpp_version();
         if (oqs_ver != oqs_cpp_ver) {
-            std::cerr << "Warning! liboqs version " << oqs_ver
-                      << " differs from liboqs-python version " << oqs_cpp_ver
-                      << std::endl;
+            //std::cerr << "Warning! liboqs version " << oqs_ver
+            //          << " differs from liboqs-python version " << oqs_cpp_ver
+            //          << std::endl;
         }
     }
 };

@@ -150,7 +150,8 @@ public:
 
 unsigned WINAPI thread_start_server(void* arg)
 {
-	//std::cout << "UDP Server" << std::endl;
+	int port = 6001;
+	std::cout << "listening on port " << port << std::endl;
 
 	SOCKET sockSrv = socket(AF_INET, SOCK_DGRAM, 0);
 	if (INVALID_SOCKET == sockSrv)
@@ -162,7 +163,7 @@ unsigned WINAPI thread_start_server(void* arg)
 	SOCKADDR_IN addrSrv;
 	addrSrv.sin_family = AF_INET;
 	addrSrv.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
-	addrSrv.sin_port = htons(6001);
+	addrSrv.sin_port = htons(port);
 
 
 	if (SOCKET_ERROR == ::bind(sockSrv, (SOCKADDR*)&addrSrv, sizeof(SOCKADDR_IN)))
@@ -226,7 +227,7 @@ unsigned WINAPI thread_start_server(void* arg)
 
 
 
-		std::cout << "start chatting" << std::endl;
+		std::cout << "start chat" << std::endl;
 		CChat m_chat(key, iv, sockSrv, addrCli);
 		m_chat.startSending();
 
