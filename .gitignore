@@ -4,13 +4,39 @@
 # Add this line
 out/
 
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+
+# Fortran module files
+*.mod
+*.smod
+
+# Executables
+*.exe
+*.out
+*.app
+
+
+# Static Library
+*.lib
 
 # MSVC
 .vs/
 /out*
 CMakeSettings.json
 
+# Documentation source files
+doc/
 
+# Visual Studio 2019 cache/options directory
+.vs/
+
+# Add this line
+out/
 
 # Build results
 [Dd]ebug/
