@@ -203,7 +203,7 @@ unsigned WINAPI thread_start_server(void* arg)
 
 
 		std::cout << "server secret key established" << std::endl;
-		std::cout << oqs::hex_chop(mServer->getSecret()) << std::endl;
+		std::cout << "Shared key: " << oqs::hex_chop(mServer->getSecret()) << std::endl;
 
 
 		using namespace CryptoPP;
