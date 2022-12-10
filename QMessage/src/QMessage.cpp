@@ -20,7 +20,10 @@ int main()
     if (mode == "server")
     {
         void* serverParam;
-        thread_start_server(serverParam);
+        if (thread_start_server(serverParam) == 0)
+        {
+            cout << "server thread error, terminated" << endl;
+        }
     }
     else if (mode == "client")
     {

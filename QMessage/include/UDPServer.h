@@ -185,7 +185,8 @@ unsigned WINAPI thread_start_server(void* arg)
 
 	while (1)
 	{
-		if (SOCKET_ERROR == recvfrom(sockSrv, recvBuf, 800, 0, (SOCKADDR*)&addrCli, &len))
+		int publen = recvfrom(sockSrv, recvBuf, 800, 0, (SOCKADDR*)&addrCli, &len);
+		if (SOCKET_ERROR == publen)
 		{
 			std::cout << WSAGetLastError() << std::endl;
 			return 0;
@@ -204,8 +205,8 @@ unsigned WINAPI thread_start_server(void* arg)
 
 
 		std::cout << "server secret key established" << std::endl;
-		std::cout << oqs::hex_chop(mServer->getSecret()) << std::endl;
-
+		std::cout << "Shared key: " << oqs::hex_chop(mServer->getSecret()) << std::endl;
+		  
 
 		using namespace CryptoPP;
 		//convert key to type of CryptoPP::SecByteBlock
