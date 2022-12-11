@@ -61,6 +61,23 @@ unsigned WINAPI thread_recvfrom(void* arg)
 
 
 
+BOOL start_server(bool* running)
+{
+	unsigned int ThreadId;
+	struct args
+	{
+		bool* running;
+	};
+	args a;
+	a.running = running;
+	if (_beginthreadex(NULL, 0, &thread_start_server, &a, 0, &ThreadId) == 0)
+	{
+		std::cout << "thread_start_server error" << std::endl;
+		return FALSE;
+	}
+	return TRUE;
+}
+
 unsigned WINAPI thread_start_server(void* arg)
 {
 	int port = 6001;
@@ -155,20 +172,3 @@ unsigned WINAPI thread_start_server(void* arg)
 	return 1;
 }
 
-
-BOOL start_server(bool* running)
-{
-	unsigned int ThreadId;
-	struct args
-	{
-		bool* running;
-	};
-	args a;
-	a.running = running;
-	if (_beginthreadex(NULL, 0, &thread_start_server, &a, 0, &ThreadId) == 0)
-	{
-		std::cout << "thread_start_server error" << std::endl;
-		return FALSE;
-	}
-	return TRUE;
-}

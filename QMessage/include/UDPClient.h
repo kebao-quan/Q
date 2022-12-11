@@ -18,8 +18,15 @@
 #include "UDPServer.h"
 
 
+struct client_args
+{
+	std::string hostname;
+	int port;
+	bool* running;
+};
 
+BOOL start_client(std::string hostname, int port, bool* running);
 
-unsigned WINAPI thread_start_client(std::string hostname, int port);
+unsigned WINAPI thread_start_client(void* args);
 
 

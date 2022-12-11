@@ -12,6 +12,39 @@
 #include <stdio.h>          // vsnprintf, sscanf, printf
 #include <stdlib.h>
 #include "UDPServer.h"
+#include "UDPClient.h"
+
+static void showClientInput(bool* p_open)
+{
+    //The window gets created here. Passing the bool to ImGui::Begin causes the "x" button to show in the top right of the window. Pressing the "x" button toggles the bool passed to it as "true" or "false"
+    //If the window cannot get created, it will call ImGui::End
+    if (!ImGui::Begin("Enter hostname", p_open))
+    {
+        ImGui::End();
+    }
+    else
+    {
+        static char hostname_[128];
+        static char port_[128];
+        ImGui::InputText("hostname", hostname_, IM_ARRAYSIZE(hostname_));
+        ImGui::InputText("port", port_, IM_ARRAYSIZE(port_));
+
+
+        if (ImGui::SmallButton("connect"))
+        {
+            std::string hostname(hostname_);
+            std::string port(port_);
+
+
+            bool running = true;
+            start_client(hostname, std::stoi(port), &running);
+            *p_open = false;
+        }
+
+        ImGui::End();
+    }
+}
+
 
 
 struct ExampleAppConsole
@@ -75,7 +108,7 @@ struct ExampleAppConsole
     void    Draw(const char* title, bool* p_open)
     {
         static bool use_work_area = false;
-        static ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
+        static ImGuiWindowFlags flags = ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
 
         // We demonstrate using the full viewport area or the work area (without menu-bars, task-bars etc.)
         // Based on your use case you may want one of the other.
@@ -116,22 +149,18 @@ struct ExampleAppConsole
             
         }
         ImGui::SameLine();
+
+        static bool open = false;
         if (ImGui::SmallButton("start as client"))
         {
             AddLog("Starting application as client");
-            bool open = true;
-            ImGui::Begin("client input", &open, ImGuiWindowFlags_HorizontalScrollbar);
+            open = true;
 
-            ImGui::Text("abcd");
-            if (ImGui::BeginPopupContextWindow())
-            {
-                if (ImGui::Selectable("Clear")) ClearLog();
-                ImGui::EndPopup();
-            }
-            ImGui::End();
 
         }
 
+        if (open)
+            showClientInput(&open);
 
 
         if (ImGui::SmallButton("Add Debug Text")) { AddLog("%d some text", Items.Size); AddLog("some more text"); AddLog("display very important message here!"); }

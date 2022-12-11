@@ -93,9 +93,8 @@ public:
 };
 
 
+BOOL start_server(bool* running);
 
 unsigned WINAPI thread_start_server(void* arg);
 
 
-
-BOOL start_server(bool* running);
