@@ -1,5 +1,6 @@
 
 #include <WinSock2.h>
+#include <ws2tcpip.h>
 #include <iostream>
 #include "oqs_cpp.h"
 #include "util.h"
@@ -81,7 +82,7 @@ unsigned WINAPI thread_recvfrom(void* arg)
 
 
 class CChat
-{
+{ 
 public:
 	CryptoPP::SecByteBlock key;
 	CryptoPP::SecByteBlock iv;
@@ -96,7 +97,7 @@ public:
 			addrCli,
 			key,
 			iv
-		};
+		}; 
 	}
 	//recvfrom(sockSrv, recvBuf, 800, 0, (SOCKADDR*)&addrCli, &len))
 	args getArgs()
@@ -105,6 +106,9 @@ public:
 		Pargs arguments = (Pargs)&a;
 		return a;
 	}
+
+
+
 
 	BOOL startSending()
 	{
@@ -184,12 +188,15 @@ unsigned WINAPI thread_start_server(void* arg)
 
 	while (1)
 	{
+		addrSrv.sin_addr.S_un.S_addr = htonl(INADDR_ANY);
+
 		int publen = recvfrom(sockSrv, recvBuf, 800, 0, (SOCKADDR*)&addrCli, &len);
-		if (SOCKET_ERROR == publen)
-		{
-			std::cout << WSAGetLastError() << std::endl;
-			return 0;
-		}
+		const char* clientIP = inet_ntoa(addrCli.sin_addr);
+		std::cout << "connection from " << clientIP << std::endl;
+
+		//????
+		InetPton(AF_INET, clientIP, &addrSrv.sin_addr.s_addr);
+
 		std::string pKey = std::string(recvBuf, 800);
 		//std::cout << "length: " << pKey.length() << std::endl;
 		oqs::bytes client_public_key = stringToOqsBytes(pKey);
