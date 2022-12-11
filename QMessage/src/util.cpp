@@ -31,3 +31,4 @@ void Dump(oqs::bytes pData, size_t nSize)
     strOut += "\n";
     std::cout << (strOut.c_str());
 }
+

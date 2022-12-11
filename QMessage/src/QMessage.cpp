@@ -9,119 +9,87 @@
 
 int main()
 {
-	using std::cout;
-    using std::endl;
-    using std::cin;
-    initSockEnv();
+	if (!initSockEnv())
+	{
+		std::cout << "socket environment initialization failed." << std::endl;
+		return 1;
+	}
+	if (!glfwInit())
+	{
+		return 1;
+	}
 
-    cout << "Are you a server or a client?" << endl;
-    std::string mode;
-    cin >> mode;
-    if (mode == "server")
-    {
-        void* serverParam;
-        if (thread_start_server(serverParam) == 0)
-        {
-            cout << "server thread error, terminated" << endl;
-        }
-    }
-    else if (mode == "client")
-    {
-        std::string hostname;
-        int port;
-        cout << "Enter peer hostname: " << endl;
-        cin >> hostname;
-        cout << "Enter peer port" << endl;
-        cin >> port;
-
-        cout << "Connecting to " << hostname << " on port " << port << "......." << endl << endl;
-
-        thread_start_client(hostname, port);
-    }
-
-    //unsigned int serverThreadId;
-    //void* serverParam;
-    //_beginthreadex(NULL, 0, &thread_start_server, serverParam, 0, &serverThreadId);
-
-    //unsigned int returncode;
-    ////_endthreadex(returncode);
+	const char* glsl_version = "#version 130";
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 0);
+	glfwWindowHint(GLFW_TRANSPARENT_FRAMEBUFFER, GLFW_TRUE);
 
 
 
-    //std::string hostname, port;
-    //cout << "Enter peer hostname: " << endl;
-    //cin >> hostname;
-    //cout << "Enter peer port" << endl;
-    //cin >> port;
+	GLFWwindow* window = glfwCreateWindow(1280, 720, "QMessage", NULL, NULL);
+	if (window == NULL)
+		return 1;
 
-    //cout << "Connecting to " << hostname << "on port " << port << "......." << endl;
-    //unsigned int clientThreadId;
-    //void* clientParam;
-    //_beginthreadex(NULL, 0, &thread_start_client, clientParam, 0, &clientThreadId);
-    //int a;
-    //cin >> a;
-    // 
-    // 
-    // 
-    // 
-    // 
-	//string PeerReceiverName = "";
-	//string PeerReceiverPort = "";
-	//cout << "Enter the peer hostname \n";
-	//cin >> PeerReceiverName;
-	//cout << "Enter the peer receiver port \n";
-	//cin >> PeerReceiverPort;
 
-  //  CServerSocket* pserver = CServerSocket::getInstance();
-  //  int count = 0;
-  //  if (pserver->InitSocket() == false)
-  //  {
-  //      cout << "Network Initialization failed, check network, network initialization failed" << endl;
-  //      exit(0);
-  //  }
-  //  while (CServerSocket::getInstance() != NULL)
-  //  {
-		//if (pserver->AcceptClient() == false)
-		//{
-		//	if (count >= 3)
-		//	{
-		//		cout << "Cannot connect to the user, please try again, Connection failed" << endl;
-		//		exit(0);
-		//	}
-		//	cout << "Cannot connect to the user, please try again, Connection failed" << endl;
-		//	count++;
-		//}
-		//int ret = pserver->DealCommand();
-  //  }
+	glfwMakeContextCurrent(window);
+	glfwSwapInterval(1);
+
+	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
+	{
+		std::cout << "Failed to initialize GLAD" << std::endl;
+		return -1;
+	}
+
+
+	int screen_width, screen_height;
+	glfwGetFramebufferSize(window, &screen_width, &screen_height);
+	//glViewport(0, 0, screen_width, screen_height);
 
 
 
+	UseImGui myimgui(window, glsl_version);
 
 
-	//std::string kem_name = "Kyber512";
-	////CEncrypt mEncrypt = CEncrypt(kem_name);
-	//CServer* mServer = new CServer(kem_name);
-	//CClient* mClient = new CClient(kem_name);
-
-	//CMessage message = std::string("hi, my name is kevin");
-
-	//oqs::bytes publicKey = mClient->sendPub();
-
-
-	//mServer->encap(publicKey);
-	//oqs::bytes ciphertext = mServer->sendCipher();
-
- //   cout << "DUMP" << endl;
- //   //Dump(ciphertext, ciphertext.size());
- //   cout << oqs::hex_chop(ciphertext) << endl;
+	myimgui.Init();
+	while (!glfwWindowShouldClose(window))
+	{
+		glfwPollEvents();
+		myimgui.Newframe();
+		myimgui.Update();
+		myimgui.Render();
+		glfwSwapBuffers(window);
+	}
+	myimgui.Shutdown();
 
 
-	//mClient->decap(ciphertext);
+	//using std::cout;
+ //   using std::endl;
+ //   using std::cin;
 
-	//mClient->encrypt(message);
-	////cout << message.get();
-	////cout << mEncrypt.mClient.client_public_key << endl;
+ //   cout << "Are you a server or a client?" << endl;
+ //   std::string mode;
+ //   cin >> mode;
+ //   if (mode == "server")
+ //   {
+ //       void* serverParam;
+ //       if (thread_start_server(serverParam) == 0)
+ //       {
+ //           cout << "server thread error, terminated" << endl;
+ //       }
+ //   }
+ //   else if (mode == "client")
+ //   {
+ //       std::string hostname;
+ //       int port;
+ //       cout << "Enter peer hostname: " << endl;
+ //       cin >> hostname;
+ //       cout << "Enter peer port" << endl;
+ //       cin >> port;
 
+ //       cout << "Connecting to " << hostname << " on port " << port << "......." << endl << endl;
+
+ //       thread_start_client(hostname, port);
+ //   }
 
 
 
