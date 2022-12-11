@@ -29,18 +29,16 @@ static void showClientInput(bool* p_open)
         ImGui::InputText("hostname", hostname_, IM_ARRAYSIZE(hostname_));
         ImGui::InputText("port", port_, IM_ARRAYSIZE(port_));
 
-
+        
+        
         if (ImGui::SmallButton("connect"))
         {
-            std::string hostname(hostname_);
-            std::string port(port_);
-
-
-            bool running = true;
+            static std::string hostname = hostname_;
+            static std::string port = port_;
+            static bool running = true;
             start_client(hostname, std::stoi(port), &running);
             *p_open = false;
         }
-
         ImGui::End();
     }
 }
@@ -108,14 +106,14 @@ struct ExampleAppConsole
     void    Draw(const char* title, bool* p_open)
     {
         static bool use_work_area = false;
-        static ImGuiWindowFlags flags = ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoTitleBar;
+        static ImGuiWindowFlags flags = ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoSavedSettings;
 
         // We demonstrate using the full viewport area or the work area (without menu-bars, task-bars etc.)
         // Based on your use case you may want one of the other.
         const ImGuiViewport* viewport = ImGui::GetMainViewport();
 
         ImGui::SetNextWindowPos(use_work_area ? viewport->WorkPos : viewport->Pos);
-        ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size, ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(use_work_area ? viewport->WorkSize : viewport->Size);
 
 
 
@@ -126,8 +124,8 @@ struct ExampleAppConsole
         }
 
 
-        ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;
-        ImGui::BeginChild("Console", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), false, window_flags);
+        //ImGuiWindowFlags window_flags = 0;
+        //ImGui::BeginChild("Console", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), false, flags);
         // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
         // So e.g. IsItemHovered() will return true when hovering the title bar.
         // Here we create a context menu only available from the title bar.
@@ -426,7 +424,7 @@ static void ShowExampleAppFullscreen(bool* p_open)
 
     if (ImGui::Begin("Example: Fullscreen window", p_open, flags))
     {
-        ShowExampleAppConsole(p_open);
+
 
 
         ImGuiWindowFlags window_flags = ImGuiWindowFlags_HorizontalScrollbar;

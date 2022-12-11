@@ -28,6 +28,11 @@ typedef struct args
 
 unsigned WINAPI thread_recvfrom(void* arg);
 
+
+
+
+
+
 class CChat
 {
 public:
@@ -60,8 +65,6 @@ public:
 		using namespace CryptoPP;
 		int len = sizeof(SOCKADDR_IN);
 		std::string plain;
-
-
 
 
 		unsigned int ThreadId;
