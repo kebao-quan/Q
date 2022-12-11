@@ -7,9 +7,8 @@
 
 std::string oqsBytesToString(oqs::bytes data_);
 
-
 oqs::bytes stringToOqsBytes(std::string data_);
 
-
-
 void Dump(oqs::bytes pData, size_t nSize);
+
+void Dump(void* data, size_t nSize);
