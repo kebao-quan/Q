@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _SHOWIMGUI_H_
+#define _SHOWIMGUI_H_
+
 
 
 #include <ctype.h>          // toupper
@@ -14,18 +17,22 @@
 #include "imgui_impl_opengl3.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-
-
 #include "console2.h"
 
 
 
 
 
-static AppConsole console;
 static void ShowAppConsole(bool* p_open)
 {
+    static AppConsole console;
     console.Draw("Example: Console", p_open);
 }
 
 
+
+
+
+
+
+#endif // !_SHOWIMGUI_H_

@@ -2,6 +2,11 @@
 // or project specific include files.
 
 #pragma once
+#ifndef _QMESSAGE_H_
+#define _QMESSAGE_H_
+
+
+
 
 #include <iostream>
 
@@ -11,15 +16,10 @@
 #include "util.h"
 #include "oqs_cpp.h"
 #include "UseImgui.h"
+#include "UDPClient.h"
+#include "UDPServer.h"
 
 
 
-//crpytopp
-#include "cryptlib.h"
-#include "rijndael.h"
-#include "secblock.h"
-#include "osrng.h"
-#include "files.h"
-#include "hex.h"
-#include "filters.h"
-#include "modes.h"
+
+#endif // !_QMESSAGE_H_

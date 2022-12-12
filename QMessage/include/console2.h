@@ -1,12 +1,15 @@
 #pragma once
-#include "showimgui.h"
 
+#ifndef _CONSOLE_H_
+#define _CONSOLE_H_
+
+#include "showimgui.h"
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
 #include "imgui_impl_opengl3.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-
+#include "UDPServer.h"
 
 
 static void showClientInput(bool* p_open)
@@ -42,7 +45,8 @@ static void showClientInput(bool* p_open)
 
 
 
-static class AppConsole
+
+class AppConsole
 {
 public:
     char                  InputBuf[256];
@@ -68,6 +72,10 @@ public:
         AutoScroll = true;
         ScrollToBottom = false;
         AddLog("Welcome to Q message!");
+
+        unsigned int tid;
+        std::cout << "appconsole construct" << std::endl;
+        _beginthreadex(NULL, 0, &AppConsole::show_recv, this, 0, &tid);
     }
     ~AppConsole()
     {
@@ -75,6 +83,22 @@ public:
         for (int i = 0; i < History.Size; i++)
             free(History[i]);
     }
+
+    static unsigned WINAPI show_recv(void* args)
+    {
+        AppConsole* p_console = (AppConsole*)args;
+        while (1)
+        {
+            Sleep(500);
+            if (!recvtext.empty())
+            {
+                std::cout << recvtext << std::endl;
+                p_console->AddLog(recvtext.c_str());
+                //recvtext.clear();
+            }
+        }
+    }
+
 
     // Portable helpers
     static int   Stricmp(const char* s1, const char* s2) { int d; while ((d = toupper(*s2) - toupper(*s1)) == 0 && *s1) { s1++; s2++; } return d; }
@@ -129,8 +153,6 @@ public:
         // Here we create a context menu only available from the title bar.
 
 
-
-
         // TODO: display items starting from the bottom
         if (ImGui::SmallButton("start as server"))
         {
@@ -142,7 +164,6 @@ public:
             {
                 std::cout << "server thread error, terminated" << std::endl;
             }
-
         }
         ImGui::SameLine();
 
@@ -404,3 +425,12 @@ public:
 };
 
 
+
+
+
+
+
+
+
+
+#endif // !_CONSOLE_H_

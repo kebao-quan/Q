@@ -1,4 +1,6 @@
 #pragma once
+#ifndef _UDPCLIENT_H_
+#define _UDPCLIENT_H_
 
 #include <WinSock2.h>
 #include <iostream>
@@ -30,3 +32,5 @@ BOOL start_client(std::string hostname, int port, bool* running);
 unsigned WINAPI thread_start_client(void* args);
 
 
+
+#endif

@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _USEIMGUI_H_
+#define _USEIMGUI_H_
+
 
 #include "imgui.h"
 #include "imgui_impl_glfw.h"
@@ -13,8 +16,8 @@
 #include <stdlib.h>
 //#include "imgui_impl_opengl3_loader.h"
 
-
 #include "showimgui.h"
+
 
 class UseImGui
 {
@@ -32,3 +35,6 @@ public:
 	void Shutdown();
 };
 
+
+
+#endif

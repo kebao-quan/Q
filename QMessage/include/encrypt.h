@@ -1,9 +1,11 @@
 #pragma once
+#ifndef _ENCRYPT_H_
+#define _ENCRYPT_H_
 
 
-#include <iostream>
+
+
 #include "message.h"
-#include "oqs/oqs.h"
 
 
 class CServer
@@ -117,3 +119,14 @@ public:
 private:
 	oqs::bytes shared_secret_client{};
 };
+
+
+
+
+
+
+
+
+
+
+#endif // !_ENCRYPT_H_

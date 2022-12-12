@@ -20,6 +20,7 @@ add_executable (QMessage
 	"include/QMessage.h"
 	"src/util.cpp"
 	"src/ServerSocket.cpp"
+	"include/message.h"
 	"src/message.cpp"
 	"src/encrypt.cpp"
 	"src/UseImgui.cpp"

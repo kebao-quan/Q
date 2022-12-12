@@ -1,5 +1,8 @@
 #pragma once
 
+#ifndef _UDPSERVER_H_
+#define _UDPSERVER_H_
+
 #include <WinSock2.h>
 #include <iostream>
 #include "oqs_cpp.h"
@@ -19,11 +22,16 @@
 #include "mutex"
 #include "condition_variable"
 
+
+
 //#include "CChat.h"
 
 static std::string plain;
+static std::string recvtext;
 static std::condition_variable cv;
 static std::mutex m;
+
+
 
 
 
@@ -116,5 +124,12 @@ BOOL start_server(bool* running);
 
 unsigned WINAPI thread_start_server(void* arg);
 
+
 void Send(std::string message);
 
+
+
+
+
+
+#endif
