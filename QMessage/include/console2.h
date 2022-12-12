@@ -9,7 +9,8 @@
 #include "imgui_impl_opengl3.h"
 #include "glad/glad.h"
 #include "GLFW/glfw3.h"
-#include "UDPServer.h"
+
+
 
 
 static void showClientInput(bool* p_open)
@@ -40,8 +41,6 @@ static void showClientInput(bool* p_open)
         ImGui::End();
     }
 }
-
-
 
 
 
@@ -87,14 +86,15 @@ public:
     static unsigned WINAPI show_recv(void* args)
     {
         AppConsole* p_console = (AppConsole*)args;
+        std::string show;
         while (1)
         {
-            Sleep(500);
-            if (!recvtext.empty())
+            Sleep(100);
+            if (!receive_empty())
             {
-                std::cout << recvtext << std::endl;
-                p_console->AddLog(recvtext.c_str());
-                //recvtext.clear();
+                show = get_recv().c_str();
+                p_console->AddLog("# %s\n", show);
+                p_console->AddLog("Received--->   '%s'\n", show);
             }
         }
     }
@@ -306,7 +306,7 @@ public:
         }
         else
         {
-            AddLog("Send--->'%s'\n", command_line);
+            AddLog("Send------->   '%s'\n", command_line);
             std::string message = std::string(command_line);
             Send(message);
         }

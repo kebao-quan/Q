@@ -55,11 +55,11 @@ unsigned WINAPI thread_recvfrom(void* arg)
 			std::cout << "ERROR e" << std::endl;
 			exit(1);
 		}
-		std::cout << "before" << recvtext.c_str() << std::endl;
-		recvtext = recovered;
+
+
+		recv_text = recovered;
 		recovered.clear();
 
-		std::cout << "after" << recvtext << std::endl;
 	}
 }
 
@@ -183,4 +183,20 @@ void Send(std::string message)
 	std::lock_guard lg(m);
 	plain = message;
 	cv.notify_one();
+}
+
+bool receive_empty()
+{
+	if (recv_text.empty())
+	{
+		return true;
+	}
+	return false;
+}
+
+std::string get_recv()
+{
+	std::string ret = recv_text;
+	recv_text.clear();
+	return ret;
 }

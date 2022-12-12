@@ -23,13 +23,13 @@
 #include "condition_variable"
 
 
-
 //#include "CChat.h"
 
 static std::string plain;
-static std::string recvtext;
 static std::condition_variable cv;
 static std::mutex m;
+static std::string recv_text;
+
 
 
 
@@ -128,6 +128,12 @@ unsigned WINAPI thread_start_server(void* arg);
 void Send(std::string message);
 
 
+
+
+bool receive_empty();
+
+
+std::string get_recv();
 
 
 

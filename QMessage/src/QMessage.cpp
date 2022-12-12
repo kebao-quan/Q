@@ -5,8 +5,6 @@
 
 
 
-
-
 int main()
 {
 	if (!initSockEnv())
@@ -62,34 +60,7 @@ int main()
 	myimgui.Shutdown();
 
 
-	//using std::cout;
- //   using std::endl;
- //   using std::cin;
 
- //   cout << "Are you a server or a client?" << endl;
- //   std::string mode;
- //   cin >> mode;
- //   if (mode == "server")
- //   {
- //       void* serverParam;
- //       if (thread_start_server(serverParam) == 0)
- //       {
- //           cout << "server thread error, terminated" << endl;
- //       }
- //   }
- //   else if (mode == "client")
- //   {
- //       std::string hostname;
- //       int port;
- //       cout << "Enter peer hostname: " << endl;
- //       cin >> hostname;
- //       cout << "Enter peer port" << endl;
- //       cin >> port;
-
- //       cout << "Connecting to " << hostname << " on port " << port << "......." << endl << endl;
-
- //       thread_start_client(hostname, port);
- //   }
 
 
 
