@@ -1,7 +1,6 @@
 #pragma once
 
 #include <WinSock2.h>
-#include <ws2tcpip.h>
 #include <iostream>
 #include "oqs_cpp.h"
 #include "util.h"
@@ -14,6 +13,15 @@
 #include "hex.h"
 #include "filters.h"
 #include "modes.h"
+
+#include "thread"
+#include "mutex"
+#include "condition_variable"
+
+
+static std::string plain;
+static std::condition_variable cv;
+static std::mutex m;
 
 
 
@@ -35,13 +43,13 @@ unsigned WINAPI thread_recvfrom(void* arg);
 
 
 class CChat
-{ 
+{
 public:
 	CryptoPP::SecByteBlock key;
 	CryptoPP::SecByteBlock iv;
 	SOCKET sockSrv;
 	SOCKADDR_IN addrCli;
-	std::string cipher, plain;
+	std::string cipher;
 	args a;
 	CChat(CryptoPP::SecByteBlock key, CryptoPP::SecByteBlock iv, SOCKET sockSrv, SOCKADDR_IN addrCli) : key(key), iv(iv), sockSrv(sockSrv), addrCli(addrCli)
 	{
@@ -50,7 +58,7 @@ public:
 			addrCli,
 			key,
 			iv
-		}; 
+		};
 	}
 	//recvfrom(sockSrv, recvBuf, 800, 0, (SOCKADDR*)&addrCli, &len))
 	args getArgs()
@@ -60,16 +68,11 @@ public:
 		return a;
 	}
 
-
-
-
 	BOOL startSending()
 	{
 		//sending until the program stop
 		using namespace CryptoPP;
 		int len = sizeof(SOCKADDR_IN);
-		std::string plain;
-
 
 		unsigned int ThreadId;
 		//args a = getArgs();
@@ -78,7 +81,14 @@ public:
 		while (1)
 		{
 			cipher.clear();
-			std::getline(std::cin, plain);
+			
+
+			std::unique_lock ul(m);
+
+
+			cv.wait(ul, [&] {return (!plain.empty()) ? true : false; });
+
+
 			try
 			{
 				CBC_Mode< AES >::Encryption e;
@@ -90,7 +100,7 @@ public:
 				std::cerr << e.what() << std::endl;
 				return FALSE;
 			}
-
+			plain.clear();
 			const char* sendBuf = cipher.data();
 			sendto(sockSrv, sendBuf, cipher.length(), 0, (SOCKADDR*)&addrCli, len);
 
@@ -104,4 +114,4 @@ BOOL start_server(bool* running);
 
 unsigned WINAPI thread_start_server(void* arg);
 
-
+void Send(std::string message);

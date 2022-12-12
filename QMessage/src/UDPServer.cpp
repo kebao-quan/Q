@@ -1,5 +1,8 @@
 #include "UDPServer.h"
 
+
+
+
 BOOL initSockEnv()
 {
 	WORD wVersionRequested;
@@ -172,3 +175,10 @@ unsigned WINAPI thread_start_server(void* arg)
 	return 1;
 }
 
+
+void Send(std::string message)
+{
+	std::lock_guard lg(m);
+	plain = message;
+	cv.notify_one();
+}

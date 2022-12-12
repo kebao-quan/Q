@@ -24,6 +24,7 @@ add_executable (QMessage
 	"src/encrypt.cpp"
 	"src/UseImgui.cpp"
 	"include/showimgui.h"
+	"include/UDPServer.h"
 	"src/UDPServer.cpp"
 	"include/UDPClient.h"
 	"src/UDPClient.cpp")
