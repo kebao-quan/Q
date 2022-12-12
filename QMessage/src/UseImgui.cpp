@@ -27,7 +27,7 @@ void UseImGui::Update()
 {
 	// rendering our geometries
 	bool p_open = true;
-    ShowExampleAppConsole(&p_open);
+	ShowAppConsole(&p_open);
 	//ShowExampleAppFullscreen(&p_open);
 }
 

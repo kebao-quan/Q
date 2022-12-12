@@ -15,10 +15,7 @@ BOOL start_client(std::string hostname, int port, bool* running)
 	a.port = portCopy;
 	a.running = p_runningCopy;
 	std::cout << a.hostname << std::endl;
-	//std::cout << "hostname length: " << hostname.length() << std::endl;
 	std::cout << a.port << std::endl;
-	//std::cout << "port + 1: " << a.port + 1 << std::endl;
-	//Dump(&a, 64);
 
 	if (!_beginthreadex(NULL, 0, &thread_start_client, &a, 0, &ThreadId))
 	{

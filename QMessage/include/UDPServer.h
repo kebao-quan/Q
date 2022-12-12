@@ -5,6 +5,7 @@
 #include "oqs_cpp.h"
 #include "util.h"
 #include "encrypt.h"
+
 #include "cryptlib.h"
 #include "rijndael.h"
 #include "secblock.h"
@@ -18,6 +19,7 @@
 #include "mutex"
 #include "condition_variable"
 
+//#include "CChat.h"
 
 static std::string plain;
 static std::condition_variable cv;
@@ -115,3 +117,4 @@ BOOL start_server(bool* running);
 unsigned WINAPI thread_start_server(void* arg);
 
 void Send(std::string message);
+

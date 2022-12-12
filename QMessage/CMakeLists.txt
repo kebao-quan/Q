@@ -27,7 +27,7 @@ add_executable (QMessage
 	"include/UDPServer.h"
 	"src/UDPServer.cpp"
 	"include/UDPClient.h"
-	"src/UDPClient.cpp")
+	"src/UDPClient.cpp" "include/CChat.h")
 
 
 if (CMAKE_VERSION VERSION_GREATER 3.12)

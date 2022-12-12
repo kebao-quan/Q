@@ -2,7 +2,6 @@
 
 
 
-
 BOOL initSockEnv()
 {
 	WORD wVersionRequested;
@@ -56,8 +55,10 @@ unsigned WINAPI thread_recvfrom(void* arg)
 			std::cout << "ERROR e" << std::endl;
 			exit(1);
 		}
+
+		
+
 		recovered.clear();
-		//std::cout << "empty string: " << recovered.c_str() << std::endl;
 	}
 }
 

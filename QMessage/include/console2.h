@@ -1,6 +1,13 @@
 #pragma once
 #include "showimgui.h"
 
+#include "imgui.h"
+#include "imgui_impl_glfw.h"
+#include "imgui_impl_opengl3.h"
+#include "glad/glad.h"
+#include "GLFW/glfw3.h"
+
+
 
 static void showClientInput(bool* p_open)
 {
@@ -32,8 +39,12 @@ static void showClientInput(bool* p_open)
 }
 
 
-struct ExampleAppConsole
+
+
+
+static class AppConsole
 {
+public:
     char                  InputBuf[256];
     ImVector<char*>       Items;
     ImVector<const char*> Commands;
@@ -43,7 +54,7 @@ struct ExampleAppConsole
     bool                  AutoScroll;
     bool                  ScrollToBottom;
 
-    ExampleAppConsole()
+    AppConsole()
     {
         ClearLog();
         memset(InputBuf, 0, sizeof(InputBuf));
@@ -56,9 +67,9 @@ struct ExampleAppConsole
         Commands.push_back("CLASSIFY");
         AutoScroll = true;
         ScrollToBottom = false;
-        AddLog("Welcome to Dear ImGui!");
+        AddLog("Welcome to Q message!");
     }
-    ~ExampleAppConsole()
+    ~AppConsole()
     {
         ClearLog();
         for (int i = 0; i < History.Size; i++)
@@ -286,7 +297,7 @@ struct ExampleAppConsole
     // In C++11 you'd be better off using lambdas for this sort of forwarding callbacks
     static int TextEditCallbackStub(ImGuiInputTextCallbackData* data)
     {
-        ExampleAppConsole* console = (ExampleAppConsole*)data->UserData;
+        AppConsole* console = (AppConsole*)data->UserData;
         return console->TextEditCallback(data);
     }
 
@@ -391,3 +402,5 @@ struct ExampleAppConsole
         return 0;
     }
 };
+
+
