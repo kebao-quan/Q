@@ -92,9 +92,9 @@ public:
             Sleep(100);
             if (!receive_empty())
             {
-                show = get_recv().c_str();
-                p_console->AddLog("# %s\n", show);
-                p_console->AddLog("Received--->   '%s'\n", show);
+                show = get_recv();
+                p_console->AddLog("# %s\n", show.c_str());
+                p_console->AddLog("Received--->   '%s'\n", show.c_str());
             }
         }
     }
@@ -145,15 +145,6 @@ public:
             return;
         }
 
-
-        //ImGuiWindowFlags window_flags = 0;
-        //ImGui::BeginChild("Console", ImVec2(ImGui::GetContentRegionAvail().x, ImGui::GetContentRegionAvail().y), false, flags);
-        // As a specific feature guaranteed by the library, after calling Begin() the last Item represent the title bar.
-        // So e.g. IsItemHovered() will return true when hovering the title bar.
-        // Here we create a context menu only available from the title bar.
-
-
-        // TODO: display items starting from the bottom
         if (ImGui::SmallButton("start as server"))
         {
             AddLog("Starting application as server");
@@ -172,8 +163,6 @@ public:
         {
             AddLog("Starting application as client");
             open = true;
-
-
         }
 
         if (open)

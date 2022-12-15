@@ -128,10 +128,7 @@ unsigned WINAPI thread_start_server(void* arg);
 void Send(std::string message);
 
 
-
-
 bool receive_empty();
-
 
 std::string get_recv();
 

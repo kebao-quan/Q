@@ -39,14 +39,12 @@ unsigned WINAPI thread_recvfrom(void* arg)
 	{
 		int jlen = recvfrom(sockSrv, recvBuf, 1000, 0, (SOCKADDR*)&addrCli, &len);
 		cipher = std::string(recvBuf, jlen);
+		std::cout << oqs::hex_chop(stringToOqsBytes(cipher)) << std::endl;
 		CBC_Mode< AES >::Decryption d;
 		try
 		{
-
 			d.SetKeyWithIV(key, key.size(), iv);
-
 			CryptoPP::StringSource s(cipher, true, new StreamTransformationFilter(d, new StringSink(recovered)));
-
 			std::cout << recovered.c_str() << std::endl;
 		}
 		catch (const Exception& e)
@@ -55,15 +53,11 @@ unsigned WINAPI thread_recvfrom(void* arg)
 			std::cout << "ERROR e" << std::endl;
 			exit(1);
 		}
-
-
 		recv_text = recovered;
 		recovered.clear();
 
 	}
 }
-
-
 
 
 BOOL start_server(bool* running)
@@ -123,14 +117,10 @@ unsigned WINAPI thread_start_server(void* arg)
 		if (SOCKET_ERROR == publen)
 		{
 			std::cout << WSAGetLastError() << std::endl;
-			return 0;
+			continue;
 		}
-		std::string pKey = std::string(recvBuf, 800);
-		//std::cout << "length: " << pKey.length() << std::endl;
+		std::string pKey = std::string(recvBuf, publen);
 		oqs::bytes client_public_key = stringToOqsBytes(pKey);
-
-		//Dump(stringToOqsBytes(pKey), stringToOqsBytes(pKey).size());
-		//std::cout << oqs::hex_chop(stringToOqsBytes(pKey)) << std::endl;
 		mServer->encap(client_public_key);
 		oqs::bytes ciphertext_ = mServer->sendCipher();
 		std::string ciphertext = oqsBytesToString(ciphertext_);
@@ -138,7 +128,7 @@ unsigned WINAPI thread_start_server(void* arg)
 		sendto(sockSrv, sendBuf, ciphertext.length(), 0, (SOCKADDR*)&addrCli, len);
 
 
-		std::cout << "server secret key established" << std::endl;
+		std::cout << "Server secret key established" << std::endl;
 		std::cout << "Shared key: " << oqs::hex_chop(mServer->getSecret()) << std::endl;
 
 
@@ -154,23 +144,13 @@ unsigned WINAPI thread_start_server(void* arg)
 		SecByteBlock iv((const unsigned char*)(iv_.data()), iv_.size());
 
 
-		//std::string plain = "Hello this is a message";
-		//std::string cipher, recovered;
-		//std::cout << "plain text: " << plain << std::endl;
-
-
-
-
-
-
 		std::cout << "start chat" << std::endl;
 		CChat m_chat(key, iv, sockSrv, addrCli);
 		m_chat.startSending();
 
+		std::unique_lock ul(m);
+		cv.wait(ul, [&] {return false; });
 	}
-
-
-
 
 	closesocket(sockSrv);
 	WSACleanup();
