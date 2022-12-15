@@ -57,6 +57,7 @@ public:
     bool                  AutoScroll;
     bool                  ScrollToBottom;
 
+
     AppConsole()
     {
         ClearLog();
@@ -73,7 +74,6 @@ public:
         AddLog("Welcome to Q message!");
 
         unsigned int tid;
-        std::cout << "appconsole construct" << std::endl;
         _beginthreadex(NULL, 0, &AppConsole::show_recv, this, 0, &tid);
     }
     ~AppConsole()
