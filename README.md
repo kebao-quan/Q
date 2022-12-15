@@ -1,3 +1,3 @@
 # Q
 
-Peer-to-peer messagoing application with post-quantum encryption
+Peer-to-peer messaging application with post-quantum encryption
